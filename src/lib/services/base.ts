@@ -6,10 +6,10 @@ import {
   type FindOptionsWhere,
   type FindOptionsSelect,
   type FindOptionsSelectByString,
-  type ObjectLiteral
+  type ObjectLiteral,
+  type DeepPartial
 } from 'typeorm'
 import { NotFoundError } from '../helpers/exceptions-errors'
-import { type QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity'
 
 export abstract class BaseAttributes {
   @PrimaryGeneratedColumn('uuid')
@@ -24,7 +24,7 @@ export abstract class BaseAttributes {
 
 export interface IService<T extends ObjectLiteral> {
   create: (
-    body: QueryDeepPartialEntity<T> | Array<QueryDeepPartialEntity<T>>
+    body: DeepPartial<T> | Array<DeepPartial<T>>
   ) => Promise<ObjectLiteral[]>
   getAll: () => Promise<T[]>
   getOne: (
@@ -46,9 +46,9 @@ export default class Service<T extends ObjectLiteral, R extends Repository<T>>
   }
 
   async create(
-    body: QueryDeepPartialEntity<T> | Array<QueryDeepPartialEntity<T>>
+    body: DeepPartial<T> | Array<DeepPartial<T>>
   ): Promise<ObjectLiteral[]> {
-    const data = await this.repository.insert(body)
+    const data = await this.repository.insert(body as any)
     return data.generatedMaps
   }
 
