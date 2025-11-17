@@ -35,9 +35,9 @@ export class Company extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./role').Role, (role: Role) => role.companies, { nullable: false })
+  @ManyToOne(() => require('./role').Role, { nullable: true })
   @JoinColumn({ name: 'roleId' })
-  role!: Role
+  role?: Role
 
   @ManyToOne(() => require('./user').User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'createdBy' })
