@@ -10,7 +10,7 @@ const createSubmissionSchema = z.object({
   submitterName: z.string().optional(),
   submitterPhone: z.string().optional(),
   submitterDocumentId: z.string().optional(),
-  answers: z.record(z.any()),
+  answers: z.record(z.string(), z.any()),
 })
 
 export async function POST(req: NextRequest) {
