@@ -22,7 +22,7 @@ export async function apiClient(
     ...fetchOptions,
     headers,
     credentials: 'include', // Siempre incluir cookies
-    body: body ? JSON.stringify(body) : fetchOptions.body,
+    ...(body !== undefined && { body: JSON.stringify(body) }),
   });
 }
 
