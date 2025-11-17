@@ -9,8 +9,8 @@
     "typeorm": "ts-node --project tsconfig.scripts.json --require tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm migration:generate src/lib/database/migrations/migration -- -d src/lib/database/data-source.ts",
     "migration:create": "npm run typeorm migration:create src/lib/database/migrations/migration",
-    "migration:run": "ts-node --project tsconfig.scripts.json --require tsconfig-paths/register scripts/run-migrations.ts",
-    "migration:revert": "ts-node --project tsconfig.scripts.json --require tsconfig-paths/register scripts/revert-migration.ts",
+    "migration:run": "npm run typeorm migration:run -- -d src/lib/database/data-source.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/lib/database/data-source.ts",
     "migration:show": "ts-node --project tsconfig.scripts.json --require tsconfig-paths/register scripts/show-migrations.ts",
     "update:field-options": "ts-node --project tsconfig.scripts.json --require tsconfig-paths/register scripts/update-field-options.ts"
   },
