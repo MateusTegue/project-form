@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
       contactPassword: hashedPassword,
       companySlug,
       redirectUrl: validatedData.redirectUrl || `${process.env.FRONTEND_URL}/company/${companySlug}`,
-      createdBy: authResult.user.id,
+      createdBy: { id: authResult.user.id },
     })
 
     return formatResponse(company, 'Company created successfully', 201)
