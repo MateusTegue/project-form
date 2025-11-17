@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
+import { NotFoundError, CustomError } from '@/lib/helpers/exceptions-errors'
 import { CompanyFormAssignmentRepository } from '@/lib/repositories/companyformassignment.repository'
 
 export async function GET(
@@ -15,12 +16,12 @@ export async function GET(
     const assignment = await CompanyFormAssignmentRepository.getByPublicToken(token)
 
     if (!assignment) {
-      return formatError(new Error('Form assignment not found or inactive'), 404)
+      return formatError(new NotFoundError('Form assignment not found or inactive'))
     }
 
     // Verificar si el formulario ha expirado
     if (assignment.expiresAt && new Date(assignment.expiresAt) < new Date()) {
-      return formatError(new Error('This form has expired'), 410)
+      return formatError(new CustomError('This form has expired', 'GONE', 410))
     }
 
     return formatResponse(assignment, 'Form assignment retrieved successfully')

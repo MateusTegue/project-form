@@ -3,6 +3,7 @@ import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { authMiddleware } from '@/lib/middlewares/auth.middleware'
 import { superAdminOrCompany } from '@/lib/middlewares/role.middleware'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
+import { NotFoundError } from '@/lib/helpers/exceptions-errors'
 import { FormSubmissionRepository } from '@/lib/repositories/formsubmission.repository'
 import { SubmissionStatusEnum } from '@/lib/enums/EnumEntity'
 import { z } from 'zod'
@@ -42,7 +43,7 @@ export async function PUT(
     )
 
     if (!submission) {
-      return formatError(new Error('Submission not found'), 404)
+      return formatError(new NotFoundError('Submission not found'))
     }
 
     if (validatedData.reviewNotes !== undefined) {

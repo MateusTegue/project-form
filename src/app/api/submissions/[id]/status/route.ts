@@ -3,6 +3,7 @@ import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { authMiddleware } from '@/lib/middlewares/auth.middleware'
 import { superAdminOrCompany } from '@/lib/middlewares/role.middleware'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
+import { BadRequestError, NotFoundError } from '@/lib/helpers/exceptions-errors'
 import { FormSubmissionRepository } from '@/lib/repositories/formsubmission.repository'
 import { SubmissionStatusEnum } from '@/lib/enums/EnumEntity'
 
@@ -24,17 +25,17 @@ export async function PATCH(
 
     // Validar que el body tenga status
     if (!body || typeof body !== 'object') {
-      return formatError(new Error('Cuerpo de la petición debe ser un objeto'), 400)
+      return formatError(new BadRequestError('Cuerpo de la petición debe ser un objeto'))
     }
 
     if (!body.status) {
-      return formatError(new Error('El campo "status" es requerido'), 400)
+      return formatError(new BadRequestError('El campo "status" es requerido'))
     }
 
     // Validar que el status sea un valor válido
     const validStatuses = Object.values(SubmissionStatusEnum)
     if (!validStatuses.includes(body.status)) {
-      return formatError(new Error(`Status inválido. Valores válidos: ${validStatuses.join(', ')}`), 400)
+      return formatError(new BadRequestError(`Status inválido. Valores válidos: ${validStatuses.join(', ')}`))
     }
 
     const userRole = typeof authResult.user.role === 'string' 
@@ -50,7 +51,7 @@ export async function PATCH(
     )
 
     if (!submission) {
-      return formatError(new Error('Submission not found'), 404)
+      return formatError(new NotFoundError('Submission not found'))
     }
 
     // Actualizar reviewNotes si está presente

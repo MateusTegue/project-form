@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
+import { BadRequestError } from '@/lib/helpers/exceptions-errors'
 import { FormSubmissionRepository } from '@/lib/repositories/formsubmission.repository'
 
 export async function POST(
@@ -13,30 +14,30 @@ export async function POST(
     const { token } = await params
     
     if (!token) {
-      return formatError(new Error('Token no proporcionado'), 400)
+      return formatError(new BadRequestError('Token no proporcionado'))
     }
 
     let body: any
     try {
       body = await req.json()
     } catch (error) {
-      return formatError(new Error('Cuerpo de la petición inválido'), 400)
+      return formatError(new BadRequestError('Cuerpo de la petición inválido'))
     }
 
     // Validar datos básicos
     if (!body || typeof body !== 'object') {
-      return formatError(new Error('Cuerpo de la petición debe ser un objeto'), 400)
+      return formatError(new BadRequestError('Cuerpo de la petición debe ser un objeto'))
     }
 
     if (!body.answers || typeof body.answers !== 'object') {
-      return formatError(new Error('El campo "answers" es requerido'), 400)
+      return formatError(new BadRequestError('El campo "answers" es requerido'))
     }
 
     // Validar email si está presente
     if (body.submitterEmail && body.submitterEmail.trim() !== '') {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(body.submitterEmail)) {
-        return formatError(new Error('El email proporcionado no es válido'), 400)
+        return formatError(new BadRequestError('El email proporcionado no es válido'))
       }
     }
 
