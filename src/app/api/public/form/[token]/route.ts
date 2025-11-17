@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
-import { NotFoundError, CustomError } from '@/lib/helpers/exceptions-errors'
+import { NotFoundError, CustomError, ResponseCode } from '@/lib/helpers/exceptions-errors'
 import { CompanyFormAssignmentRepository } from '@/lib/repositories/companyformassignment.repository'
 
 export async function GET(
@@ -21,7 +21,7 @@ export async function GET(
 
     // Verificar si el formulario ha expirado
     if (assignment.expiresAt && new Date(assignment.expiresAt) < new Date()) {
-      return formatError(new CustomError('Este formulario ha expirado', 'GONE', 410))
+      return formatError(new CustomError('Este formulario ha expirado', 'GONE', ResponseCode.GONE))
     }
 
     return formatResponse(assignment, 'Form assignment retrieved successfully')
