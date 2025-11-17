@@ -56,12 +56,20 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const validatedData = createFormTemplateSchema.parse(body)
 
+    // Normalizar módulos con valores por defecto para propiedades opcionales
+    const normalizedModules = (validatedData.modules || []).map((module, index) => ({
+      moduleId: module.moduleId,
+      displayOrder: module.displayOrder ?? index,
+      isRequired: module.isRequired ?? false,
+      isActive: module.isActive ?? true,
+    }))
+
     const template = await FormTemplateRepository.createTemplateWithModules({
       name: validatedData.name,
       description: validatedData.description,
       templateType: validatedData.templateType || 'TERCERO_GENERAL',
-      createdBy: authResult.user.id,
-      modules: validatedData.modules || [],
+      createdBy: authResult.user.id as any,
+      modules: normalizedModules,
     })
 
     return formatResponse(template, 'Form template created successfully', 201)
