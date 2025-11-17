@@ -13,7 +13,36 @@ interface ExportOptions {
  * Función auxiliar para obtener el valor de un answer por fieldKey
  * Similar a la función getAnswerValue en SagridocsItem
  */
-const getAnswerValueByKey = (submission: Submission, fieldKey: string): string => {
+const getAnswerValueByKey = (submission: Submission | SubmissionWithModules, fieldKey: string): string => {
+  // Si es SubmissionWithModules, buscar en los módulos
+  if ('submissionInfo' in submission) {
+    for (const module of submission.modules || []) {
+      for (const field of module.fields || []) {
+        if (field.fieldKey?.toLowerCase() === fieldKey.toLowerCase()) {
+          const answer = field.answer;
+          if (!answer) return '-';
+          if (answer.textValue) return answer.textValue;
+          if (answer.numberValue !== undefined && answer.numberValue !== null) {
+            return answer.numberValue.toString();
+          }
+          if (answer.dateValue) {
+            try {
+              const date = new Date(answer.dateValue);
+              if (!isNaN(date.getTime())) {
+                return date.toLocaleDateString("es-ES");
+              }
+            } catch (error) {
+              // Ignorar error de fecha
+            }
+          }
+          return '-';
+        }
+      }
+    }
+    return '-';
+  }
+
+  // Si es Submission, usar la lógica original
   if (!submission.answers || submission.answers.length === 0) {
     return '-';
   }
@@ -49,7 +78,19 @@ const getAnswerValueByKey = (submission: Submission, fieldKey: string): string =
 /**
  * Obtener información del remitente desde submission o answers
  */
-const getRemitterInfo = (submission: Submission) => {
+const getRemitterInfo = (submission: Submission | SubmissionWithModules) => {
+  // Si es SubmissionWithModules, extraer datos de submissionInfo
+  if ('submissionInfo' in submission) {
+    const submissionInfo = submission.submissionInfo;
+    return {
+      name: submissionInfo.submitterName || "",
+      email: submissionInfo.submitterEmail || "",
+      phone: submissionInfo.submitterPhone || "",
+      documentId: submissionInfo.submitterDocumentId || "",
+    };
+  }
+
+  // Si es Submission, usar la lógica original
   const name = submission.submitterName || 
                getAnswerValueByKey(submission, 'razon_social') || 
                getAnswerValueByKey(submission, 'nombre') || 
@@ -224,12 +265,20 @@ export const exportSubmissionsToExcel = async ({
       PROCESADO: "Procesado",
     };
 
-    const submittedDate = submission.submittedAt 
+    // Extraer propiedades según el tipo
+    const submissionId = 'submissionInfo' in submission ? submission.submissionInfo.id : submission.id;
+    const submittedAt = 'submissionInfo' in submission ? submission.submissionInfo.submittedAt : submission.submittedAt;
+    const status = 'submissionInfo' in submission ? submission.submissionInfo.status : submission.status;
+    const submitterEmail = 'submissionInfo' in submission ? submission.submissionInfo.submitterEmail : submission.submitterEmail;
+    const formTemplateName = 'formInfo' in submission ? submission.formInfo.templateName : submission.companyFormAssignment?.formTemplate?.name;
+    const companyName = 'formInfo' in submission ? submission.formInfo.companyName : submission.companyFormAssignment?.company?.name;
+
+    const submittedDate = submittedAt 
       ? (() => {
           try {
-            const date = new Date(submission.submittedAt);
+            const date = new Date(submittedAt);
             if (isNaN(date.getTime())) {
-              return submission.submittedAt;
+              return submittedAt;
             }
             return date.toLocaleDateString("es-ES", {
               day: "2-digit",
@@ -239,7 +288,7 @@ export const exportSubmissionsToExcel = async ({
               minute: "2-digit",
             });
           } catch (error) {
-            return submission.submittedAt;
+            return submittedAt;
           }
         })()
       : "-";
@@ -251,17 +300,17 @@ export const exportSubmissionsToExcel = async ({
 
     summaryData.push({
       'N°': index + 1,
-      'ID': submission.id,
+      'ID': submissionId,
       'Fecha de Envío': submittedDate,
       'Razón Social': razonSocial,
       'NIT/Cédula': nitCedula,
-      'Email': submission.submitterEmail || remitterInfo.email || '-',
+      'Email': submitterEmail || remitterInfo.email || '-',
       'Teléfono': remitterInfo.phone || '-',
       'Documento': remitterInfo.documentId || nitCedula || '-',
       'Tipo de Tercero': tipoTercero,
-      'Estado': statusLabels[submission.status] || submission.status,
-      'Formulario': submission.companyFormAssignment?.formTemplate?.name || "-",
-      'Empresa': submission.companyFormAssignment?.company?.name || "-",
+      'Estado': statusLabels[status] || status,
+      'Formulario': formTemplateName || "-",
+      'Empresa': companyName || "-",
     });
   });
 
@@ -280,18 +329,24 @@ export const exportSubmissionsToExcel = async ({
     // Obtener datos completos con módulos (ya obtenidos si fetchFullData es true)
     const fullSubmissionData = fetchFullData 
       ? (fullSubmissionsData[index] || null)
-      : await fetchFullSubmissionData(submission.id);
+      : await fetchFullSubmissionData('submissionInfo' in submission ? submission.submissionInfo.id : submission.id);
     
     if (!fullSubmissionData) {
       // Si no se pueden obtener los datos completos, usar los datos básicos
       const remitterInfo = getRemitterInfo(submission);
+      const submissionId = 'submissionInfo' in submission ? submission.submissionInfo.id : submission.id;
+      const submitterName = 'submissionInfo' in submission ? submission.submissionInfo.submitterName : submission.submitterName;
+      const submitterEmail = 'submissionInfo' in submission ? submission.submissionInfo.submitterEmail : submission.submitterEmail;
+      const submitterPhone = 'submissionInfo' in submission ? submission.submissionInfo.submitterPhone : submission.submitterPhone;
+      const submitterDocumentId = 'submissionInfo' in submission ? submission.submissionInfo.submitterDocumentId : submission.submitterDocumentId;
+      const submittedAt = 'submissionInfo' in submission ? submission.submissionInfo.submittedAt : submission.submittedAt;
       
       detailData.push({
         'N°': index + 1,
-        'ID Submission': submission.id,
+        'ID Submission': submissionId,
         'Módulo': 'REMITENTE',
         'Campo': 'Nombre',
-        'Valor': remitterInfo.name || submission.submitterName || '-',
+        'Valor': remitterInfo.name || submitterName || '-',
       });
 
       detailData.push({
@@ -299,7 +354,7 @@ export const exportSubmissionsToExcel = async ({
         'ID Submission': '',
         'Módulo': 'REMITENTE',
         'Campo': 'Email',
-        'Valor': remitterInfo.email || submission.submitterEmail || '-',
+        'Valor': remitterInfo.email || submitterEmail || '-',
       });
 
       detailData.push({
@@ -307,7 +362,7 @@ export const exportSubmissionsToExcel = async ({
         'ID Submission': '',
         'Módulo': 'REMITENTE',
         'Campo': 'Teléfono',
-        'Valor': remitterInfo.phone || submission.submitterPhone || '-',
+        'Valor': remitterInfo.phone || submitterPhone || '-',
       });
 
       detailData.push({
@@ -315,7 +370,7 @@ export const exportSubmissionsToExcel = async ({
         'ID Submission': '',
         'Módulo': 'REMITENTE',
         'Campo': 'Documento',
-        'Valor': remitterInfo.documentId || submission.submitterDocumentId || '-',
+        'Valor': remitterInfo.documentId || submitterDocumentId || '-',
       });
 
       detailData.push({
@@ -323,12 +378,12 @@ export const exportSubmissionsToExcel = async ({
         'ID Submission': '',
         'Módulo': 'REMITENTE',
         'Campo': 'Fecha de Envío',
-        'Valor': submission.submittedAt 
+        'Valor': submittedAt 
           ? (() => {
               try {
-                const date = new Date(submission.submittedAt);
+                const date = new Date(submittedAt);
                 if (isNaN(date.getTime())) {
-                  return submission.submittedAt;
+                  return submittedAt;
                 }
                 return date.toLocaleDateString("es-ES", {
                   day: "2-digit",
@@ -338,7 +393,7 @@ export const exportSubmissionsToExcel = async ({
                   minute: "2-digit",
                 });
               } catch (error) {
-                return submission.submittedAt;
+                return submittedAt;
               }
             })()
           : "-",
