@@ -42,18 +42,39 @@ async function updateFieldOptions() {
 
     // Buscar todos los campos SELECT en la base de datos
     const selectFields = await AppDataSource.getRepository(FormField).find({
-      where: { fieldType: FieldTypeEnum.SELECT },
-      relations: ['options']
+      where: { fieldType: FieldTypeEnum.SELECT }
     })
 
     console.log(`🔍 Encontrados ${selectFields.length} campos SELECT en la base de datos`)
+
+    // Obtener todas las opciones existentes agrupadas por fieldId
+    const fieldOptionRepository = AppDataSource.getRepository(FieldOption)
+    const allOptions = await fieldOptionRepository
+      .createQueryBuilder('option')
+      .leftJoinAndSelect('option.field', 'field')
+      .getMany()
+    
+    const optionsByFieldId = new Map<string, FieldOption[]>()
+    
+    for (const option of allOptions) {
+      // Obtener el fieldId de la relación o de la columna directamente
+      const fieldId = option.field?.id || (option as any).formFieldId
+      if (fieldId) {
+        if (!optionsByFieldId.has(fieldId)) {
+          optionsByFieldId.set(fieldId, [])
+        }
+        optionsByFieldId.get(fieldId)!.push(option)
+      }
+    }
 
     let updatedCount = 0
     let skippedCount = 0
     let errorCount = 0
 
     for (const field of selectFields) {
-      const existingOptionsCount = field.options?.length || 0
+      // Obtener opciones existentes para este campo
+      const existingOptions = optionsByFieldId.get(field.id) || []
+      const existingOptionsCount = existingOptions.length
       const jsonOptions = optionsMap.get(field.fieldKey)
 
       if (!jsonOptions || jsonOptions.length === 0) {
