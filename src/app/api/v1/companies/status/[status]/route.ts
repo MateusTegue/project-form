@@ -6,9 +6,11 @@ import { formatResponse, formatError } from '@/lib/utils/api-response'
 import { CompanyRepository } from '@/lib/repositories/company.repository'
 import { StatusEnum } from '@/lib/enums/EnumEntity'
 
+type StatusRouteParams = Promise<{ status: string }>
+
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ status: string }> }
+  context: { params: StatusRouteParams }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -19,7 +21,8 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const { status: statusParam } = await params
+    const resolvedParams = await context.params
+    const { status: statusParam } = resolvedParams
     const status = statusParam === 'ACTIVE' ? StatusEnum.ACTIVE : StatusEnum.INACTIVE
     const companies = await CompanyRepository.getAllCompaniesByStatus(status)
 
