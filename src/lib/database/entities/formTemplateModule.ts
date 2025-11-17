@@ -5,13 +5,13 @@ import type { FormModule } from './formodule'
 
 @Entity('formtemplatemodule')
 export class FormTemplateModule extends BaseAttributes {
-  @ManyToOne('FormTemplate', { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => require('./formtemplate').FormTemplate, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'templateId' })
-  template?: FormTemplate
+  template!: FormTemplate
 
-  @ManyToOne('FormModule', { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => require('./formodule').FormModule, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'moduleId' })
-  module?: FormModule
+  module!: FormModule
 
   @Column({ type: 'int', default: 0 })
   displayOrder!: number

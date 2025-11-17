@@ -6,13 +6,13 @@ import { BaseAttributes } from '../../services/base'
 
 @Entity('company_user')
 export class CompanyUser extends BaseAttributes {
-  @ManyToOne('Company', { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => require('./company').Company, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'companyId' })
-  company?: Company
+  company!: Company
 
-  @ManyToOne('User', { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => require('./user').User, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'userId' })
-  user?: User
+  user!: User
 
   @Column({
     type: 'enum',

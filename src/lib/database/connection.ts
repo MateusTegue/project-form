@@ -30,20 +30,7 @@ function getDatabaseInfo() {
 export const initDatabase = async (): Promise<void> => {
   try {
     if (!AppDataSource.isInitialized) {
-      // Intentar inicializar con manejo de errores de dependencias circulares
-      try {
-        await AppDataSource.initialize()
-      } catch (error: any) {
-        // Si el error es de dependencias circulares, intentar una segunda vez
-        // después de un breve delay para permitir que los módulos se carguen completamente
-        if (error?.message?.includes('Circular relations') || error?.message?.includes('Dependency Cycle')) {
-          console.warn('⚠️  Circular dependency detected, retrying initialization...')
-          await new Promise(resolve => setTimeout(resolve, 100))
-          await AppDataSource.initialize()
-        } else {
-          throw error
-        }
-      }
+      await AppDataSource.initialize()
       const dbInfo = getDatabaseInfo()
       console.log('✅ Database connected successfully')
       console.log(`📊 Database: ${dbInfo.database}`)

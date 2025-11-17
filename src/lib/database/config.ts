@@ -101,8 +101,7 @@ const config: ConfigDataBase = {
     entities,
     ...(isNextJsRuntime ? {} : { migrations: ['src/lib/database/migrations/*{.ts,.js}'] }),
     migrationsTableName: 'migrations',
-    subscribers: [],
-    relationLoadStrategy: 'query', // Usar estrategia de carga por consulta para evitar problemas con relaciones circulares
+    subscribers: []
   },
   local: {
     type: 'postgres',
@@ -119,7 +118,6 @@ const config: ConfigDataBase = {
     migrationsTableName: 'migrations',
     subscribers: [],
     maxQueryExecutionTime: 1000,
-    relationLoadStrategy: 'query', // Usar estrategia de carga por consulta para evitar problemas con relaciones circulares
   }
 }
 

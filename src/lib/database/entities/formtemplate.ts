@@ -27,7 +27,7 @@ export class FormTemplate extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne('User', { nullable: true })
+  @ManyToOne(() => require('./user').User, { nullable: true })
   @JoinColumn({ name: 'createdBy' })
   createdBy?: User
 
