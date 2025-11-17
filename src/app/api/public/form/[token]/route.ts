@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureDatabaseInitialized } from '@/lib/database/init'
 import { formatResponse, formatError } from '@/lib/utils/api-response'
-import { NotFoundError, CustomError, ResponseCode } from '@/lib/helpers/exceptions-errors'
+import { NotFoundError, CustomError } from '@/lib/helpers/exceptions-errors'
+import { ResponseCode } from '@/lib/helpers/request'
 import { CompanyFormAssignmentRepository } from '@/lib/repositories/companyformassignment.repository'
 
 export async function GET(
