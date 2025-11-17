@@ -39,7 +39,7 @@ export class Company extends BaseAttributes {
   @JoinColumn({ name: 'roleId' })
   role!: Role
 
-  @ManyToOne(() => require('./user').User, { nullable: false, onDelete: 'SET NULL' })
+  @ManyToOne(() => require('./user').User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'createdBy' })
   createdBy?: User
 

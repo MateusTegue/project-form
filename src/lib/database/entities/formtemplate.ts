@@ -27,9 +27,9 @@ export class FormTemplate extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./user').User, { nullable: false })
+  @ManyToOne(() => require('./user').User, { nullable: true })
   @JoinColumn({ name: 'createdBy' })
-  createdBy!: User
+  createdBy?: User
 
   @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.template, { cascade: true })
   moduleAssignments!: FormTemplateModule[]
