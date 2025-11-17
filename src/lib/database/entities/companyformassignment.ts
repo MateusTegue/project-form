@@ -7,13 +7,13 @@ import type { FormSubmission } from './formsubmission'
 
 @Entity('companyformassignment')
 export class CompanyFormAssignment extends BaseAttributes {
-  @ManyToOne(() => require('./company').Company, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne('Company', { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'companyId' })
-  company!: Company
+  company?: Company
 
-  @ManyToOne(() => require('./formtemplate').FormTemplate, { nullable: false })
+  @ManyToOne('FormTemplate', { nullable: true })
   @JoinColumn({ name: 'formTemplateId' })
-  formTemplate!: FormTemplate
+  formTemplate?: FormTemplate
 
   @Column({ type: 'varchar', length: 100, unique: true, nullable: false })
   publicToken!: string

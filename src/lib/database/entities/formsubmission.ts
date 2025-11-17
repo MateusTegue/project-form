@@ -6,9 +6,9 @@ import { SubmissionStatusEnum } from '../../enums/EnumEntity'
 
 @Entity('form_submission')
 export class FormSubmission extends BaseAttributes {
-  @ManyToOne(() => require('./companyformassignment').CompanyFormAssignment, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne('CompanyFormAssignment', { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'companyFormAssignmentId' })
-  companyFormAssignment!: CompanyFormAssignment
+  companyFormAssignment?: CompanyFormAssignment
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   submitterEmail?: string

@@ -16,8 +16,8 @@ export class FieldOption extends BaseAttributes {
   @Column({ type: 'boolean', default: true })
   isActive!: boolean
 
-  @ManyToOne(() => require('./formfield').FormField, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne('FormField', { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'formFieldId' })
-  field!: FormField
+  field?: FormField
 }
 

@@ -27,7 +27,7 @@ export class Otp extends BaseAttributes {
   @Column()
   expirationDate!: Date
 
-  @ManyToOne(() => require('./user').User, { nullable: false, onDelete: 'CASCADE' })
-  user!: User
+  @ManyToOne('User', { nullable: true, onDelete: 'CASCADE' })
+  user?: User
 }
 

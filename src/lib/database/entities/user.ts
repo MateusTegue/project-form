@@ -41,7 +41,7 @@ export class User extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./role').Role, { eager: false, nullable: true })
+  @ManyToOne('Role', { eager: false, nullable: true })
   @JoinColumn({ name: 'roleId' })
   role?: Role
 
