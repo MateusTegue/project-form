@@ -56,6 +56,7 @@ export default function SagridocsList() {
         PENDIENTE: "Pendientes",
         PROCESANDO: "En_Proceso",
         PROCESADO: "Procesados",
+        ELIMINADO: "Eliminados",
       };
 
       const fileName = `formularios_${statusLabels[estado] || estado.toLowerCase()}`;
