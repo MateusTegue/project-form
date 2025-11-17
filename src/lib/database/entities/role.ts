@@ -16,7 +16,8 @@ export class Role extends BaseAttributes {
   @OneToMany(() => require('./user').User, (user: User) => user.role)
   users!: User[]
 
-  @OneToMany(() => require('./company').Company, (company: Company) => company.role)
-  companies!: Company[]
+  // Relación removida temporalmente para evitar dependencias circulares
+  // @OneToMany(() => require('./company').Company, (company: Company) => company.role)
+  // companies!: Company[]
 }
 
