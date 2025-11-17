@@ -7,7 +7,7 @@ import { FormSubmissionRepository } from '@/lib/repositories/formsubmission.repo
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { companyId: string } }
+  { params }: { params: Promise<{ companyId: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -18,7 +18,8 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const count = await FormSubmissionRepository.countPendingByCompany(params.companyId)
+    const { companyId } = await params
+    const count = await FormSubmissionRepository.countPendingByCompany(companyId)
 
     return formatResponse({ count }, 'Pending submissions count retrieved successfully')
   } catch (error) {

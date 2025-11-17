@@ -17,7 +17,7 @@ const updateModulesSchema = z.object({
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -28,11 +28,12 @@ export async function PUT(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
+    const { id } = await params
     const body = await req.json()
     const validatedData = updateModulesSchema.parse(body)
 
     const template = await FormTemplateRepository.updateTemplateModules(
-      params.id,
+      id,
       validatedData.modules
     )
 

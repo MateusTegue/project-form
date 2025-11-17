@@ -8,7 +8,7 @@ import { StatusEnum } from '@/lib/enums/EnumEntity'
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { companyId: string } }
+  { params }: { params: Promise<{ companyId: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -19,9 +19,10 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
+    const { companyId } = await params
     const assignments = await CompanyFormAssignmentRepository.find({
       where: {
-        company: { id: params.companyId },
+        company: { id: companyId },
         status: StatusEnum.ACTIVE
       },
       relations: {

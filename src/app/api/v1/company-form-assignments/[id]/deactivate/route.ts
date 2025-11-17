@@ -7,7 +7,7 @@ import { CompanyFormAssignmentRepository } from '@/lib/repositories/companyforma
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -18,7 +18,8 @@ export async function PATCH(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const assignment = await CompanyFormAssignmentRepository.deactivateAssignment(params.id)
+    const { id } = await params
+    const assignment = await CompanyFormAssignmentRepository.deactivateAssignment(id)
 
     return formatResponse(assignment, 'Assignment deactivated successfully')
   } catch (error) {

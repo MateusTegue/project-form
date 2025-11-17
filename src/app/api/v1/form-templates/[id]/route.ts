@@ -7,7 +7,7 @@ import { FormTemplateRepository } from '@/lib/repositories/formtemplate.reposito
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -18,7 +18,8 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const template = await FormTemplateRepository.getFormTemplateById(params.id)
+    const { id } = await params
+    const template = await FormTemplateRepository.getFormTemplateById(id)
 
     if (!template) {
       return formatError(new Error('Form template not found'))

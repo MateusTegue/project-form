@@ -7,7 +7,7 @@ import { CompanyFormAssignmentRepository } from '@/lib/repositories/companyforma
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { companyId: string } }
+  { params }: { params: Promise<{ companyId: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -18,7 +18,8 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const assignments = await CompanyFormAssignmentRepository.getCompanyAssignments(params.companyId)
+    const { companyId } = await params
+    const assignments = await CompanyFormAssignmentRepository.getCompanyAssignments(companyId)
 
     return formatResponse(assignments, 'Form assignments retrieved successfully')
   } catch (error) {

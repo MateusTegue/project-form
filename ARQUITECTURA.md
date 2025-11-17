@@ -1,63 +1,58 @@
-# Arquitectura del Sistema CAPIN
-
-## 📋 Descripción General
-
-CAPIN es una aplicación web full-stack construida con **Next.js 15** (App Router) que implementa un sistema de gestión de formularios dinámicos con autenticación basada en roles. La aplicación sigue una arquitectura en capas con separación clara de responsabilidades.
 
 ## 🏗️ Arquitectura en Capas
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CAPA DE PRESENTACIÓN                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
-│  │   (public)   │  │ (protected)  │  │   API Routes │         │
-│  │   Routes     │  │   Routes     │  │   (Next.js) │         │
-│  └──────────────┘  └──────────────┘  └──────────────┘         │
-│         │                  │                  │                │
-│         └──────────────────┼──────────────────┘                │
-│                            │                                    │
-│  ┌──────────────────────────────────────────────┐              │
-│  │         React Components (UI Layer)          │              │
-│  │  - SuperAdmin Components                     │              │
-│  │  - Company Components                        │              │
-│  │  - Public Form Components                    │              │
-│  │  - Shared UI Components (Radix UI)            │              │
-│  └──────────────────────────────────────────────┘              │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                        CAPA DE PRESENTACIÓN             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │   (public)   │  │ (protected)  │  │   API Routes │   │
+│  │   Routes     │  │   Routes     │  │   (Next.js)  │   │
+│  └──────────────┘  └──────────────┘  └──────────────┘   │
+│         │                  │                  │         │
+│         └──────────────────┼──────────────────┘         │
+│                            │                            │
+│  ┌──────────────────────────────────────────────┐       │
+│  │         React Components (UI Layer)          │       │
+│  │  - SuperAdmin Components                     │       │
+│  │  - Company Components                        │       │
+│  │  - Public Form Components                    │       │
+│  │  - Shared UI Components (Radix UI)           │       │
+│  └──────────────────────────────────────────────┘       │
+└─────────────────────────────────────────────────────────┘
                             │
                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      CAPA DE LÓGICA DE NEGOCIO                   │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
-│  │   Services   │  │  Middlewares │  │    Hooks     │         │
-│  │              │  │              │  │              │         │
-│  │ - Auth       │  │ - Auth       │  │ - Profile   │         │
-│  │ - User       │  │ - Role       │  │ - Users      │         │
-│  │ - Company    │  │              │  │ - Forms      │         │
-│  │ - Module     │  │              │  │              │         │
-│  │ - OTP        │  │              │  │              │         │
-│  └──────────────┘  └──────────────┘  └──────────────┘         │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                      CAPA DE LÓGICA DE NEGOCIO           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
+│  │   Services   │  │  Middlewares │  │    Hooks     │    │
+│  │              │  │              │  │              │    │
+│  │ - Auth       │  │ - Auth       │  │ - Profile    │    │
+│  │ - User       │  │ - Role       │  │ - Users      │    │
+│  │ - Company    │  │              │  │ - Forms      │    │
+│  │ - Module     │  │              │  │              │    │
+│  │ - OTP        │  │              │  │              │    │
+│  └──────────────┘  └──────────────┘  └──────────────┘    │
+└──────────────────────────────────────────────────────────┘
                             │
                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      CAPA DE ACCESO A DATOS                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
-│  │ Repositories │  │   Entities   │  │  Data Source │         │
-│  │              │  │              │  │              │         │
-│  │ - User       │  │ - User       │  │ - TypeORM   │         │
-│  │ - Company    │  │ - Company    │  │ - PostgreSQL │         │
-│  │ - Form       │  │ - FormModule │  │ - Migrations │         │
-│  │ - Submission │  │ - FormField  │  │              │         │
-│  │ - Assignment │  │ - Submission │  │              │         │
-│  └──────────────┘  └──────────────┘  └──────────────┘         │
-└─────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                      CAPA DE ACCESO A DATOS               │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ Repositories │  │   Entities   │  │  Data Source │     │
+│  │              │  │              │  │              │     │
+│  │ - User       │  │ - User       │  │ - TypeORM    │     │
+│  │ - Company    │  │ - Company    │  │ - PostgreSQL │     │
+│  │ - Form       │  │ - FormModule │  │ - Migrations │     │
+│  │ - Submission │  │ - FormField  │  │              │     │
+│  │ - Assignment │  │ - Submission │  │              │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+└───────────────────────────────────────────────────────────┘
                             │
                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        BASE DE DATOS                             │
-│                    PostgreSQL Database                           │
-└─────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                        BASE DE DATOS                      │
+│                    PostgreSQL Database                    │
+└───────────────────────────────────────────────────────────┘
 ```
 
 ## 🔄 Flujo de Datos
@@ -304,113 +299,25 @@ CompanyFormAssignment ── FormSubmission
 ```
 capin/
 ├── src/
-│   ├── app/                    # Next.js App Router
+│   ├── app/                   # Next.js App Router
 │   │   ├── (public)/          # Rutas públicas
-│   │   ├── (protected)/      # Rutas protegidas
+│   │   ├── (protected)/       # Rutas protegidas
 │   │   ├── api/               # API Routes
 │   │   └── layout.tsx         # Layout raíz
 │   ├── components/            # Componentes compartidos
-│   │   ├── ui/               # Componentes UI base
-│   │   └── ...               # Otros componentes
+│   │   ├── ui/                # Componentes UI base
+│   │   └── ...                # Otros componentes
 │   ├── lib/                   # Lógica de negocio
-│   │   ├── database/         # Configuración DB
-│   │   ├── entities/         # Entidades TypeORM
-│   │   ├── repositories/     # Repositorios
-│   │   ├── services/        # Servicios
-│   │   ├── middlewares/      # Middlewares
-│   │   └── utils/            # Utilidades
-│   ├── hooks/                # Custom hooks
-│   ├── types/                # Tipos TypeScript
-│   └── middleware.ts         # Middleware de Next.js
+│   │   ├── database/          # Configuración DB
+│   │   ├── entities/          # Entidades TypeORM
+│   │   ├── repositories/      # Repositorios
+│   │   ├── services/          # Servicios
+│   │   ├── middlewares/       # Middlewares
+│   │   └── utils/             # Utilidades
+│   ├── hooks/                 # Custom hooks
+│   ├── types/                 # Tipos TypeScript
+│   └── middleware.ts          # Middleware de Next.js
 ├── scripts/                   # Scripts de utilidad
 ├── public/                    # Archivos estáticos
 └── package.json
 ```
-
-## 🔄 Patrones de Diseño Implementados
-
-### 1. Repository Pattern
-- Abstracción de acceso a datos
-- Repositorios extendidos de TypeORM
-- Métodos personalizados por entidad
-
-### 2. Service Layer Pattern
-- Lógica de negocio separada de acceso a datos
-- Servicios que usan repositorios
-- Clase base `Service` para funcionalidad común
-
-### 3. Middleware Pattern
-- Autenticación y autorización centralizadas
-- Validación de roles reutilizable
-- Aplicado en API routes y rutas protegidas
-
-### 4. Component Composition
-- Componentes pequeños y reutilizables
-- Separación de lógica y presentación
-- Hooks personalizados para lógica compartida
-
-## 🚀 Flujos de Trabajo Principales
-
-### 1. Creación de Formulario
-```
-SuperAdmin → Crear Módulos → Crear Campos → Crear Plantilla → Asignar a Empresa → Generar Token
-```
-
-### 2. Envío de Formulario Público
-```
-Usuario → Accede con Token → Completa Formulario → Submit → Validación → Guardado en DB
-```
-
-### 3. Revisión de Submisiones
-```
-Company → Ver Submisiones → Filtrar/Ordenar → Ver Detalles → Cambiar Estado → Notas
-```
-
-## 🔒 Seguridad
-
-### Implementaciones de Seguridad
-- **JWT Tokens**: Autenticación stateless
-- **HTTP-only Cookies**: Prevención de XSS
-- **Role-based Access Control**: Autorización granular
-- **Input Validation**: Zod schemas
-- **SQL Injection Prevention**: TypeORM parameterized queries
-- **Password Hashing**: bcrypt con salt rounds
-
-### Middleware de Seguridad
-- Validación de tokens en cada request
-- Verificación de roles antes de acceso
-- Protección de rutas sensibles
-- Validación de datos de entrada
-
-## 📊 Características Principales
-
-1. **Formularios Dinámicos**: Sistema flexible de módulos y campos
-2. **Multi-tenant**: Soporte para múltiples empresas
-3. **Formularios Públicos**: Acceso mediante tokens únicos
-4. **Gestión de Submisiones**: Tracking completo de respuestas
-5. **Roles y Permisos**: Sistema granular de acceso
-6. **Dashboard Analytics**: Estadísticas por empresa
-7. **Exportación de Datos**: Funcionalidad de exportación a Excel
-
-## 🔧 Scripts de Utilidad
-
-- `migration:run` - Ejecutar migraciones
-- `migration:revert` - Revertir última migración
-- `migration:show` - Mostrar migraciones pendientes
-- `migration:generate` - Generar nueva migración
-- `update:field-options` - Actualizar opciones de campos desde JSON
-
-## 📝 Notas de Arquitectura
-
-1. **Lazy Database Initialization**: La base de datos se inicializa en el primer request para optimizar el startup
-2. **TypeORM con Next.js**: Configuración especial para evitar problemas con dynamic imports
-3. **API Routes Duales**: Mantiene compatibilidad con rutas `/api` y `/api/v1`
-4. **Server Components**: Uso extensivo de Server Components de Next.js 15
-5. **Type Safety**: TypeScript estricto en todo el proyecto
-6. **Error Handling**: Manejo centralizado de errores con formatos consistentes
-
----
-
-**Última actualización**: Diciembre 2024
-**Versión**: 1.0.0
-

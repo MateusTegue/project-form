@@ -7,7 +7,7 @@ import CompanyService from '@/lib/services/company.service'
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -18,8 +18,9 @@ export async function PATCH(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
+    const { id } = await params
     const companyService = new CompanyService()
-    await companyService.activeCompany(params.id)
+    await companyService.activeCompany(id)
 
     return formatResponse(null, 'Company activated successfully')
   } catch (error) {

@@ -21,7 +21,7 @@ const updateUserSchema = z.object({
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -32,11 +32,12 @@ export async function PUT(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
+    const { id } = await params
     const body = await req.json()
     const validatedData = updateUserSchema.parse(body)
 
     const userService = new UserService()
-    const user = await userService.updateUser(params.id, validatedData)
+    const user = await userService.updateUser(id, validatedData)
 
     return formatResponse(user, 'User updated successfully')
   } catch (error) {
@@ -46,7 +47,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -57,8 +58,9 @@ export async function DELETE(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
+    const { id } = await params
     const userService = new UserService()
-    await userService.deleteUser(params.id)
+    await userService.deleteUser(id)
 
     return formatResponse(null, 'User deleted successfully', 204)
   } catch (error) {
