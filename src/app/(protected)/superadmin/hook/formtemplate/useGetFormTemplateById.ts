@@ -7,7 +7,21 @@ export interface FormTemplate {
   description: string;
   templateType: string;
   status: string;
-  modules: any[];
+  modules?: any[];
+  moduleAssignments?: Array<{
+    id?: string;
+    moduleId?: string;
+    displayOrder?: number;
+    isRequired?: boolean;
+    isActive?: boolean;
+    module?: {
+      id: string;
+      name: string;
+      description?: string;
+      moduleKey: string;
+      fields?: any[];
+    };
+  }>;
   created_at: string;
   updated_at: string;
 }
