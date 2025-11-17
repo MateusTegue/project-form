@@ -32,15 +32,9 @@ export async function POST(req: NextRequest) {
     // Establecer cookie con información del usuario para el middleware
     if (result.user) {
       const user = result.user
-      let userRole: string = 'COMPANY'
-      
-      if (user.role) {
-        if (typeof user.role === 'object' && user.role !== null && 'name' in user.role) {
-          userRole = user.role.name
-        } else if (typeof user.role === 'string') {
-          userRole = user.role
-        }
-      }
+      const userRole = typeof user.role === 'object' && user.role !== null && 'name' in user.role
+        ? user.role.name
+        : (user.role as string) || 'COMPANY'
       
       response.cookies.set({
         name: 'user',

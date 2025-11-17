@@ -11,7 +11,7 @@ export class CompanyFormAssignment extends BaseAttributes {
   @JoinColumn({ name: 'companyId' })
   company!: Company
 
-  @ManyToOne(() => require('./formtemplate').FormTemplate, { nullable: false })
+  @ManyToOne(() => require('./formtemplate').FormTemplate, (template: FormTemplate) => template.companyAssignments, { nullable: false })
   @JoinColumn({ name: 'formTemplateId' })
   formTemplate!: FormTemplate
 
@@ -51,8 +51,7 @@ export class CompanyFormAssignment extends BaseAttributes {
     primaryColor?: string
   }
 
-  // Relación inversa removida para evitar dependencias circulares
-  // @OneToMany(() => require('./formsubmission').FormSubmission, (submission: FormSubmission) => submission.companyFormAssignment)
-  // submissions!: FormSubmission[]
+  @OneToMany(() => require('./formsubmission').FormSubmission, (submission: FormSubmission) => submission.companyFormAssignment)
+  submissions!: FormSubmission[]
 }
 

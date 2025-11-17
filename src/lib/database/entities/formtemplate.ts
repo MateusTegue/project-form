@@ -27,15 +27,14 @@ export class FormTemplate extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./user').User, { nullable: true })
+  @ManyToOne(() => require('./user').User, { nullable: false })
   @JoinColumn({ name: 'createdBy' })
-  createdBy?: User
+  createdBy!: User
 
-  // Relaciones inversas removidas para evitar dependencias circulares
-  // @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.template, { cascade: true })
-  // moduleAssignments!: FormTemplateModule[]
+  @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.template, { cascade: true })
+  moduleAssignments!: FormTemplateModule[]
 
-  // @OneToMany(() => require('./companyformassignment').CompanyFormAssignment, (assignment: CompanyFormAssignment) => assignment.formTemplate)
-  // companyAssignments!: CompanyFormAssignment[]
+  @OneToMany(() => require('./companyformassignment').CompanyFormAssignment, (assignment: CompanyFormAssignment) => assignment.formTemplate)
+  companyAssignments!: CompanyFormAssignment[]
 }
 

@@ -21,7 +21,6 @@ const publicApiRoutes = [
   '/api/public',
   '/api/logout',
   '/api/company/slug', // API pública para obtener información de empresa por slug
-  '/api/v1/users/create-admin', // API pública para crear el primer administrador
 ]
 
 export function middleware(request: NextRequest) {

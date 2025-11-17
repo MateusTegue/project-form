@@ -35,11 +35,11 @@ export class Company extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./role').Role, { nullable: true })
+  @ManyToOne(() => require('./role').Role, (role: Role) => role.companies, { nullable: false })
   @JoinColumn({ name: 'roleId' })
-  role?: Role
+  role!: Role
 
-  @ManyToOne(() => require('./user').User, { nullable: true, onDelete: 'SET NULL' })
+  @ManyToOne(() => require('./user').User, { nullable: false, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'createdBy' })
   createdBy?: User
 
@@ -86,8 +86,7 @@ export class Company extends BaseAttributes {
     [key: string]: any
   }
 
-  // Relación inversa removida para evitar dependencias circulares
-  // @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.company)
-  // companyUsers!: CompanyUser[]
+  @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.company)
+  companyUsers!: CompanyUser[]
 }
 

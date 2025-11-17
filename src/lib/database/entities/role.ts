@@ -13,12 +13,10 @@ export class Role extends BaseAttributes {
   })
   name!: RoleEnum
 
-  // Relación removida temporalmente para evitar dependencias circulares
-  // @OneToMany(() => require('./user').User, (user: User) => user.role)
-  // users!: User[]
+  @OneToMany(() => require('./user').User, (user: User) => user.role)
+  users!: User[]
 
-  // Relación removida temporalmente para evitar dependencias circulares
-  // @OneToMany(() => require('./company').Company, (company: Company) => company.role)
-  // companies!: Company[]
+  @OneToMany(() => require('./company').Company, (company: Company) => company.role)
+  companies!: Company[]
 }
 

@@ -51,7 +51,7 @@ export class FormField extends BaseAttributes {
     width?: string
   }
 
-  @ManyToOne(() => require('./formodule').FormModule, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne(() => require('./formodule').FormModule, (module: FormModule) => module.fields, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'formModuleId' })
   module!: FormModule
 
