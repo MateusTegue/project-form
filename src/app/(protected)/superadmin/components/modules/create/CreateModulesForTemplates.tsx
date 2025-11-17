@@ -122,7 +122,7 @@ export default function CreateModulesForTemplates({ modules = [], onModulesChang
       // Si hay onModulesChange, agregar el módulo creado a la lista
       if (onModulesChange) {
         const newModule: FormModule = {
-          id: result.data?.id || '',
+          moduleId: result.data?.id || '',
           name: data.name,
           description: data.description || '',
           moduleKey: data.moduleKey,
