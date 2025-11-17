@@ -62,7 +62,24 @@ export async function POST(req: NextRequest) {
     const validatedData = createCompanySchema.parse(body)
 
     const hashedPassword = await hashPassword(validatedData.contactPassword)
-    const companySlug = await generateSlug(validatedData.name, CompanyRepository, 'companySlug')
+    
+    // Generar slug único
+    const baseSlug = generateSlug(validatedData.name)
+    let companySlug = baseSlug
+    let counter = 1
+    
+    while (true) {
+      const existing = await CompanyRepository.findOne({ 
+        where: { companySlug }
+      })
+      
+      if (!existing) {
+        break
+      }
+      
+      companySlug = `${baseSlug}-${counter}`
+      counter++
+    }
 
     const company = await CompanyRepository.createCompany({
       ...validatedData,
