@@ -1,0 +1,712 @@
+{
+  "modules": [
+    {
+      "name": "INFORMACIÓN GENERAL",
+      "moduleKey": "informacion_general",
+      "description": "Información básica del tercero",
+      "fields": [
+        {
+          "label": "Tipo Tercero",
+          "fieldKey": "tipo_tercero",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Proveedor",
+              "value": "proveedor",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Cliente",
+              "value": "cliente",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Tipo Persona",
+          "fieldKey": "tipo_persona",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Natural",
+              "value": "natural",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Jurídica",
+              "value": "juridica",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "NIT",
+          "fieldKey": "nitcedula",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Razón Social",
+          "fieldKey": "razon_social",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Nombre completo Representante Legal",
+          "fieldKey": "nombre_representante_legal",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Número Identificación Representante Legal",
+          "fieldKey": "numero_identificacion_representante_legal",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Teléfono",
+          "fieldKey": "telefono",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Celular",
+          "fieldKey": "celular",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Correo Electrónico (Facturación Electrónica)",
+          "fieldKey": "correo_electronico_facturacion",
+          "fieldType": "EMAIL"
+        },
+        {
+          "label": "Dirección Principal",
+          "fieldKey": "direccion_principal",
+          "fieldType": "TEXTAREA"
+        },
+        {
+          "label": "Nacionalidad",
+          "fieldKey": "nacionalidad",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Departamento",
+          "fieldKey": "departamento",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Ciudad",
+          "fieldKey": "ciudad",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Número Registro Cámara de Comercio",
+          "fieldKey": "numero_registro_camara_comercio",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Tipo Sociedad",
+          "fieldKey": "tipo_sociedad",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sociedad por acciones simplificadas (SAS)",
+              "value": "sas",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Sociedad limitada",
+              "value": "sociedad_limitada",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "label": "Empresa unipersonal",
+              "value": "empresa_unipersonal",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "label": "Sociedad anónima",
+              "value": "sociedad_anonima",
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "label": "Sociedad colectiva",
+              "value": "sociedad_colectiva",
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "label": "Sociedad comandita simple",
+              "value": "sociedad_comandita_simple",
+              "displayOrder": 5,
+              "isActive": true
+            },
+            {
+              "label": "Sociedad comandita por acciones",
+              "value": "sociedad_comandita_acciones",
+              "displayOrder": 6,
+              "isActive": true
+            },
+            {
+              "label": "Empresa asociativa de trabajo",
+              "value": "empresa_asociativa_trabajo",
+              "displayOrder": 7,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Actividad Económica",
+          "fieldKey": "actividad_economica",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Agricultura; plantaciones, otros sectores rurales",
+              "value": "agricultura",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Alimentación; bebidas; tabaco",
+              "value": "alimentacion_bebidas_tabaco",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "label": "Comercio",
+              "value": "comercio",
+              "displayOrder": 2,
+              "isActive": true
+            },
+            {
+              "label": "Construcción",
+              "value": "construccion",
+              "displayOrder": 3,
+              "isActive": true
+            },
+            {
+              "label": "Educación",
+              "value": "educacion",
+              "displayOrder": 4,
+              "isActive": true
+            },
+            {
+              "label": "Fabricación de material de transporte",
+              "value": "fabricacion_material_transporte",
+              "displayOrder": 5,
+              "isActive": true
+            },
+            {
+              "label": "Función pública",
+              "value": "funcion_publica",
+              "displayOrder": 6,
+              "isActive": true
+            },
+            {
+              "label": "Hotelería, restauración, turismo",
+              "value": "hoteleria_restauracion_turismo",
+              "displayOrder": 7,
+              "isActive": true
+            },
+            {
+              "label": "Otro",
+              "value": "otro",
+              "displayOrder": 8,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Tipo Régimen",
+          "fieldKey": "tipo_regimen",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Régimen Común",
+              "value": "regimen_comun",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Régimen Simplificado",
+              "value": "regimen_simplificado",
+              "displayOrder": 1,
+              "isActive": true
+            },
+            {
+              "label": "Régimen Especial",
+              "value": "regimen_especial",
+              "displayOrder": 2,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Gran Contribuyente",
+          "fieldKey": "gran_contribuyente",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Autoretenedor de Renta",
+          "fieldKey": "autoretenedor_renta",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Autoretenedor de ICA",
+          "fieldKey": "autoretenedor_ica",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CONTACTO CON AREA COMERCIAL",
+      "moduleKey": "contacto_area_comercial",
+      "description": "Contacto con área comercial del tercero",
+      "fields": [
+        {
+          "label": "Nombre del contacto comercial",
+          "fieldKey": "nombre_contacto_comercial",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Teléfono",
+          "fieldKey": "telefono_contacto_comercial",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Correo Electrónico",
+          "fieldKey": "correo_contacto_comercial",
+          "fieldType": "EMAIL"
+        }
+      ]
+    },
+    {
+      "name": "CONTACTO DE CONTADOR DE PALO DE AGUA",
+      "moduleKey": "contacto_contador_palo_de_agua",
+      "description": "Contacto de contador de Palo de Agua",
+      "fields": [
+        {
+          "label": "Nombre completo del contacto en la Constructora Palo de Agua",
+          "fieldKey": "nombre_contacto_constructora",
+          "fieldType": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "REFERENCIAS COMERCIALES",
+      "moduleKey": "referencias_comerciales",
+      "description": "Referencias comerciales del tercero",
+      "fields": [
+        {
+          "label": "Nombre o Razón Social",
+          "fieldKey": "nombre_razon_social_referencia",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Dirección",
+          "fieldKey": "direccion_referencia",
+          "fieldType": "TEXTAREA"
+        },
+        {
+          "label": "Departamento",
+          "fieldKey": "departamento_referencia",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Ciudad",
+          "fieldKey": "ciudad_referencia",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Teléfono",
+          "fieldKey": "telefono_referencia",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Correo Electrónico",
+          "fieldKey": "correo_referencia",
+          "fieldType": "EMAIL"
+        }
+      ]
+    },
+    {
+      "name": "INFORMACIÓN FINANCIERA",
+      "moduleKey": "informacion_financiera",
+      "description": "Información financiera del tercero",
+      "fields": [
+        {
+          "label": "Periodo",
+          "fieldKey": "periodo_ultimo_corte",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Activo Corriente",
+          "fieldKey": "activo_corriente",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Pasivo Corriente",
+          "fieldKey": "pasivo_corriente",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Activo Total",
+          "fieldKey": "activo_total",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Pasivo Total",
+          "fieldKey": "pasivo_total",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Ingresos",
+          "fieldKey": "ingresos",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Utilidad Bruta",
+          "fieldKey": "utilidad_bruta",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Utilidad Neta del Ejercicio",
+          "fieldKey": "utilidad_neta_ejercicio",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Periodo",
+          "fieldKey": "periodo_anio_anterior",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Activo Corriente",
+          "fieldKey": "activo_corriente_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Pasivo Corriente",
+          "fieldKey": "pasivo_corriente_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Activo Total",
+          "fieldKey": "activo_total_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Pasivo Total",
+          "fieldKey": "pasivo_total_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Ingresos",
+          "fieldKey": "ingresos_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Utilidad Bruta",
+          "fieldKey": "utilidad_bruta_anio_anterior",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Utilidad Neta del Ejercicio",
+          "fieldKey": "utilidad_neta_ejercicio_anio_anterior",
+          "fieldType": "NUMBER"
+        }
+      ]
+    },
+    {
+      "name": "INFORMACIÓN SOCIAL",
+      "moduleKey": "informacion_social",
+      "description": "Información social y de beneficiarios finales",
+      "fields": [
+        {
+          "label": "Nombre Completo",
+          "fieldKey": "nombre_completo_socio_1",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Identificación",
+          "fieldKey": "identificacion_socio_1",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "% Participación",
+          "fieldKey": "participacion_socio_1",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Nombre Completo",
+          "fieldKey": "nombre_completo_socio_2",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Identificación",
+          "fieldKey": "identificacion_socio_2",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "% Participación",
+          "fieldKey": "participacion_socio_2",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "Nombre Completo",
+          "fieldKey": "nombre_completo_socio_3",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Identificación",
+          "fieldKey": "identificacion_socio_3",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "% Participación",
+          "fieldKey": "participacion_socio_3",
+          "fieldType": "NUMBER"
+        },
+        {
+          "label": "¿Ostenta u ostentó en los últimos 2 años algún grado de poder público?",
+          "fieldKey": "grado_poder_publico",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "¿Cuál?",
+          "fieldKey": "cual_grado_poder_publico",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "¿Goza o gozó en los últimos 2 años de reconocimiento público?",
+          "fieldKey": "reconocimiento_publico",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "¿Cuál?",
+          "fieldKey": "cual_reconocimiento_publico",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "¿Maneja o manejó recursos públicos?",
+          "fieldKey": "maneja_recursos_publicos",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "¿Cuál?",
+          "fieldKey": "cual_recursos_publicos",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "¿El representante legal, alguno de sus accionistas y/o socios tiene algún familiar que trabaje en la Constructora Palo de Agua?",
+          "fieldKey": "familiar_constructora",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Sí",
+              "value": "si",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "No",
+              "value": "no",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Parentesco",
+          "fieldKey": "parentesco_familiar",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Nombre del Familiar",
+          "fieldKey": "nombre_familiar",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Número de Documento",
+          "fieldKey": "numero_documento_familiar",
+          "fieldType": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "INFORMACIÓN BANCARIA",
+      "moduleKey": "informacion_bancaria",
+      "description": "Información bancaria del tercero",
+      "fields": [
+        {
+          "label": "Entidad Financiera",
+          "fieldKey": "entidad_financiera",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Tipo de Cuenta",
+          "fieldKey": "tipo_cuenta",
+          "fieldType": "SELECT",
+          "options": [
+            {
+              "label": "Ahorros",
+              "value": "ahorros",
+              "displayOrder": 0,
+              "isActive": true
+            },
+            {
+              "label": "Corriente",
+              "value": "corriente",
+              "displayOrder": 1,
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "label": "Número de Cuenta",
+          "fieldKey": "numero_cuenta",
+          "fieldType": "TEXT"
+        },
+        {
+          "label": "Correo Electrónico para Información de Pago",
+          "fieldKey": "correo_informacion_pago",
+          "fieldType": "EMAIL"
+        }
+      ]
+    },
+    {
+      "name": "ANEXOS",
+      "moduleKey": "anexos",
+      "description": "Documentos adjuntos requeridos",
+      "fields": [
+        {
+          "label": "RUT",
+          "fieldKey": "rut",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Estados financieros comparativos al último corte fiscal",
+          "fieldKey": "estados_financieros",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Declaración de Renta",
+          "fieldKey": "declaracion_renta",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Certificado de Existencia y Representación legal",
+          "fieldKey": "certificado_existencia_representacion",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Certificación bancaria",
+          "fieldKey": "certificacion_bancaria",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Fotocopia Cédula Representante Legal",
+          "fieldKey": "fotocopia_cedula_representante",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Certificaciones Comerciales",
+          "fieldKey": "certificaciones_comerciales",
+          "fieldType": "FILE"
+        },
+        {
+          "label": "Composición accionaria",
+          "fieldKey": "composicion_accionaria",
+          "fieldType": "FILE"
+        }
+      ]
+    }
+  ]
+}
+
