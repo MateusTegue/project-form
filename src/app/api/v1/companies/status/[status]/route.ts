@@ -8,7 +8,7 @@ import { StatusEnum } from '@/lib/enums/EnumEntity'
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { status: string } }
+  { params }: { params: Promise<{ status: string }> }
 ) {
   try {
     await ensureDatabaseInitialized()
@@ -19,7 +19,8 @@ export async function GET(
     const roleCheck = superAdminOrCompany(authResult.user)
     if (roleCheck) return roleCheck
 
-    const status = params.status === 'ACTIVE' ? StatusEnum.ACTIVE : StatusEnum.INACTIVE
+    const { status: statusParam } = await params
+    const status = statusParam === 'ACTIVE' ? StatusEnum.ACTIVE : StatusEnum.INACTIVE
     const companies = await CompanyRepository.getAllCompaniesByStatus(status)
 
     return formatResponse(companies, 'Companies retrieved successfully')
