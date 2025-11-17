@@ -51,11 +51,12 @@ export class FormField extends BaseAttributes {
     width?: string
   }
 
-  @ManyToOne(() => require('./formodule').FormModule, (module: FormModule) => module.fields, { onDelete: 'CASCADE' })
+  @ManyToOne(() => require('./formodule').FormModule, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'formModuleId' })
   module!: FormModule
 
-  @OneToMany(() => require('./fieldoption').FieldOption, (option: FieldOption) => option.field, { cascade: true })
-  options!: FieldOption[]
+  // Relación inversa removida para evitar dependencias circulares
+  // @OneToMany(() => require('./fieldoption').FieldOption, (option: FieldOption) => option.field, { cascade: true })
+  // options!: FieldOption[]
 }
 

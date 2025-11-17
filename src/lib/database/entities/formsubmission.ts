@@ -6,7 +6,7 @@ import { SubmissionStatusEnum } from '../../enums/EnumEntity'
 
 @Entity('form_submission')
 export class FormSubmission extends BaseAttributes {
-  @ManyToOne(() => require('./companyformassignment').CompanyFormAssignment, (assignment: CompanyFormAssignment) => assignment.submissions, { onDelete: 'CASCADE' })
+  @ManyToOne(() => require('./companyformassignment').CompanyFormAssignment, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'companyFormAssignmentId' })
   companyFormAssignment!: CompanyFormAssignment
 
@@ -47,7 +47,8 @@ export class FormSubmission extends BaseAttributes {
   @Column({ type: 'timestamp', nullable: true })
   submittedAt?: Date
 
-  @OneToMany(() => require('./submissionanswer').SubmissionAnswer, (answer: SubmissionAnswer) => answer.submission, { cascade: true })
-  answers!: SubmissionAnswer[]
+  // Relación inversa removida para evitar dependencias circulares
+  // @OneToMany(() => require('./submissionanswer').SubmissionAnswer, (answer: SubmissionAnswer) => answer.submission, { cascade: true })
+  // answers!: SubmissionAnswer[]
 }
 

@@ -31,10 +31,11 @@ export class FormTemplate extends BaseAttributes {
   @JoinColumn({ name: 'createdBy' })
   createdBy?: User
 
-  @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.template, { cascade: true })
-  moduleAssignments!: FormTemplateModule[]
+  // Relaciones inversas removidas para evitar dependencias circulares
+  // @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.template, { cascade: true })
+  // moduleAssignments!: FormTemplateModule[]
 
-  @OneToMany(() => require('./companyformassignment').CompanyFormAssignment, (assignment: CompanyFormAssignment) => assignment.formTemplate)
-  companyAssignments!: CompanyFormAssignment[]
+  // @OneToMany(() => require('./companyformassignment').CompanyFormAssignment, (assignment: CompanyFormAssignment) => assignment.formTemplate)
+  // companyAssignments!: CompanyFormAssignment[]
 }
 

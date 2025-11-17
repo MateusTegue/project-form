@@ -17,10 +17,11 @@ export class FormModule extends BaseAttributes {
   @Column({ type: 'boolean', default: true })
   isActive!: boolean
 
-  @OneToMany(() => require('./formfield').FormField, (field: FormField) => field.module, { cascade: true })
-  fields!: FormField[]
+  // Relaciones inversas removidas para evitar dependencias circulares
+  // @OneToMany(() => require('./formfield').FormField, (field: FormField) => field.module, { cascade: true })
+  // fields!: FormField[]
 
-  @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.module)
-  templateAssignments!: FormTemplateModule[]
+  // @OneToMany(() => require('./formTemplateModule').FormTemplateModule, (templateModule: FormTemplateModule) => templateModule.module)
+  // templateAssignments!: FormTemplateModule[]
 }
 

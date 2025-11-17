@@ -86,7 +86,8 @@ export class Company extends BaseAttributes {
     [key: string]: any
   }
 
-  @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.company)
-  companyUsers!: CompanyUser[]
+  // Relación inversa removida para evitar dependencias circulares
+  // @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.company)
+  // companyUsers!: CompanyUser[]
 }
 

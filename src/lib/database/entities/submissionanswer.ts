@@ -5,11 +5,11 @@ import type { FormField } from './formfield'
 
 @Entity('submission_answer')
 export class SubmissionAnswer extends BaseAttributes {
-  @ManyToOne(() => require('./formsubmission').FormSubmission, (submission: FormSubmission) => submission.answers, { onDelete: 'CASCADE' })
+  @ManyToOne(() => require('./formsubmission').FormSubmission, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'formSubmissionId' })
   submission!: FormSubmission
 
-  @ManyToOne(() => require('./formfield').FormField, { nullable: false })
+  @ManyToOne(() => require('./formfield').FormField, { nullable: true })
   @JoinColumn({ name: 'formFieldId' })
   field!: FormField
 

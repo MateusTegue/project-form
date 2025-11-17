@@ -41,14 +41,15 @@ export class User extends BaseAttributes {
   })
   status!: StatusEnum
 
-  @ManyToOne(() => require('./role').Role, (role: Role) => role.users, { eager: false })
+  @ManyToOne(() => require('./role').Role, { eager: false, nullable: true })
   @JoinColumn({ name: 'roleId' })
-  role!: Role
+  role?: Role
 
-  @OneToMany(() => require('./otp').Otp, (otp: Otp) => otp.user)
-  otps!: Otp[]
+  // Relaciones inversas removidas para evitar dependencias circulares
+  // @OneToMany(() => require('./otp').Otp, (otp: Otp) => otp.user)
+  // otps!: Otp[]
 
-  @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.user)
-  companyUsers!: CompanyUser[]
+  // @OneToMany(() => require('./companyUser').CompanyUser, (cu: CompanyUser) => cu.user)
+  // companyUsers!: CompanyUser[]
 }
 
